@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Edit Profile | Vietgram</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
+</head>
+<script>
+jQuery.ajax({
+  url: 'core/getActiveUser.php',
+  type: 'GET',
+  dataType: 'json',
+  complete: function(xhr, textStatus) {
+    console.log(xhr, textStatus)
+  },
+  success: function(data, textStatus, xhr) {
+    $(".edit-profile__username").html(data.name)
+    $("#id").val(data.id_profile)
+    $("#full-name").val(data.name)
+    $("#user-name").val(data.username)
+    $("#website").val(data.website)
+    $("#bio").val(data.bio)
+    $("#email").val(data.email)
+    $("#phone").val(data.phone_number)
+    $("#gender").val(data.gender)
+  },
+  error: function(xhr, textStatus, errorThrown) {
+    console.log(xhr, textStatus, errorThrown)
+  }
+});
+</script>
+
+<body>
+    <nav class="navigation">
+        <div class="navigation__column">
+            <a href="feed.html">
+                <img src="foto/logo.png" />
+            </a>
+        </div>
+        <div class="navigation__column">
+            <i class="fa fa-search"></i>
+            <input type="text" placeholder="Search">
+        </div>
+        <div class="navigation__column">
+            <ul class="navigations__links">
+                <li class="navigation__list-item">
+                    <a href="explore.html" class="navigation__link">
+                        <i class="fa fa-compass fa-lg"></i>
+                    </a>
+                </li>
+                <li class="navigation__list-item">
+                    <a href="#" class="navigation__link">
+                        <i class="fa fa-heart-o fa-lg"></i>
+                    </a>
+                </li>
+                <li class="navigation__list-item">
+                    <a href="profil.html" class="navigation__link">
+                        <i class="fa fa-user-o fa-lg"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <main id="edit-profile">
+        <div class="edit-profile__container">
+            <header class="edit-profile__header">
+                <div class="edit-profile__avatar-container">
+                    <img src="foto/avatar.jpg" class="edit-profile__avatar" />
+                </div>
+                <h4 class="edit-profile__username">serranoarevalo</h4>
+            </header>
+            <form action="" method="post" class="edit-profile__form">
+                <input type="hidden" id="id">
+                <div class="form__row">
+                    <label for="full-name" class="form__label">Name:</label>
+                    <input id="full-name" name="fullName" type="text" class="form__input" />
+                </div>
+                <div class="form__row">
+                    <label for="user-name" class="form__label">Username:</label>
+                    <input id="user-name" name="username" type="text" class="form__input" />
+                </div>
+                <div class="form__row">
+                    <label for="website" class="form__label">Website:</label>
+                    <input id="website" name="url" type="text" class="form__input" />
+                </div>
+                <div class="form__row">
+                    <label for="bio" class="form__label">Bio:</label>
+                    <textarea name="bio" id="bio"></textarea>
+                </div>
+                <div class="form__row">
+                    <label for="email" class="form__label">Email:</label>
+                    <input id="email" name="email" type="email" class="form__input" />
+                </div>
+                <div class="form__row">
+                    <label for="phone" class="form__label">Phone Number:</label>
+                    <input id="phone" name="phone" type="tel" class="form__input" />
+                </div>
+                <div class="form__row">
+                    <label for="gender" class="form__label">Gender:</label>
+                    <select name="gender" id="gender">
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="cant">Can't remember</option>
+                    </select>
+                </div>
+                <input type="submit" id="submit" name="submit" value="Submit">
+            </form>
+        </div>
+    </main>
+    <footer class="footer">
+        <div class="footer__column">
+            <nav class="footer__nav">
+                <ul class="footer__list">
+                    <li class="footer__list-item"><a href="#" class="footer__link">About Us</a></li>
+                    <li class="footer__list-item"><a href="#" class="footer__link">Support</a></li>
+                    <li class="footer__list-item"><a href="#" class="footer__link">Blog</a></li>
+                    <li class="footer__list-item"><a href="#" class="footer__link">Press</a></li>
+                    <li class="footer__list-item"><a href="#" class="footer__link">Api</a></li>
+                    <li class="footer__list-item"><a href="#" class="footer__link">Jobs</a></li>
+                    <li class="footer__list-item"><a href="#" class="footer__link">Privacy</a></li>
+                    <li class="footer__list-item"><a href="#" class="footer__link">Terms</a></li>
+                    <li class="footer__list-item"><a href="#" class="footer__link">Directory</a></li>
+                    <li class="footer__list-item"><a href="#" class="footer__link">Language</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="footer__column">
+            <span class="footer__copyright">© 2017 Vietgram</span>
+        </div>
+    </footer>
+</body>
+<script>
+$("#submit").click(function(e) {
+    e.preventDefault();
+    var id = $("#id").val();
+    var name = $("#full-name").val();
+    var username = $("#user-name").val();
+    var website = $("#website").val();
+    var bio = $("#bio").val();
+    var email = $("#email").val();
+    var phone = $("#phone").val();
+    var gender = $("#gender").val();
+    jQuery.ajax({
+        url: 'core/editProfile.php',
+        type: 'post',
+        data: {
+            id : id,
+            name : name,
+            username : username,
+            website : website,
+            bio : bio,
+            email : email,
+            phone : phone,
+            gender : gender
+        },
+    })
+    .done(function(data) {
+        console.log(data);
+        if (data == "error") {
+            alert("Terjadi Kesalahan Edit Profile");
+        }else{
+            alert("Berhasil Edit Profile");
+        }
+        location.reload();
+    })
+    .fail(function() {
+        console.log("error");
+    });
+    
+});
+</script>
+</html>
